@@ -17,7 +17,7 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
 
-    <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Width="900" Height="600">
+    <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Width="900" Height="600" RenderTransformOrigin="0.507,0.58">
         <Grid.RowDefinitions>
             <RowDefinition Height="155*"/>
             <RowDefinition Height="136*"/>
@@ -25,21 +25,24 @@
         </Grid.RowDefinitions>
 
 
-        <ComboBox Name="languageComboBox" SelectionChanged="LanguageComboBox_SelectionChanged" Height="40" Margin="10,36,640,0" VerticalAlignment="Top" />
+        <ComboBox Name="languageComboBox" SelectionChanged="LanguageComboBox_SelectionChanged" Height="40" Margin="10,140,640,0" VerticalAlignment="Top" Grid.RowSpan="2" />
 
 
-        <ComboBox Name="voiceNameComboBox" SelectionChanged="VoiceNameComboBox_SelectionChanged"  Height="40" Margin="288,36,362,0" VerticalAlignment="Top" />
+        <ComboBox Name="voiceNameComboBox" SelectionChanged="VoiceNameComboBox_SelectionChanged"  Height="40" Margin="288,140,362,0" VerticalAlignment="Top" Grid.RowSpan="2" />
 
 
-        <ComboBox Name="qualityComboBox" Height="40" Margin="568,36,82,0" VerticalAlignment="Top" />
+        <ComboBox Name="qualityComboBox" Height="40" Margin="568,140,82,0" VerticalAlignment="Top" Grid.RowSpan="2" />
 
-        <ui:TextBox Name="txtPrompt" Margin="10,118,82,101" TextWrapping="Wrap" Grid.RowSpan="2" />
+        <ui:TextBox Name="txtPrompt" Margin="10,59,82,5" TextWrapping="Wrap" Grid.Row="1" />
 
-        <ui:Button  Content="Generate" Click="GenerateButton_Click" Margin="10,51,0,0" VerticalAlignment="Top" Grid.Row="1" />
-        <Label Content="" Name="lblGenerate" Margin="10,88,10,18" Grid.Row="1" />
-        <Label Content="Language" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
-        <Label Content="Voice" HorizontalAlignment="Left" Margin="288,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.055,0.663"/>
-        <Label Content="Quality" HorizontalAlignment="Left" Margin="568,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="7.141,0.575"/>
-        <Label Content="Prompt" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="7.141,0.575"/>
+        <ui:Button  Content="Generate" Click="GenerateButton_Click" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Top" />
+        <Label Content="" Name="lblGenerate" Margin="10,39,10,240" Grid.Row="2" />
+        <Label Content="Language" HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top"/>
+        <Label Content="Voice" HorizontalAlignment="Left" Margin="288,112,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.055,0.663"/>
+        <Label Content="Quality" HorizontalAlignment="Left" Margin="568,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="7.141,0.575"/>
+        <Label Content="Prompt" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="7.141,0.575" Grid.Row="1"/>
+        <ComboBox x:Name="customComboBox" SelectionChanged="customComboBox_SelectionChanged"  Height="40" Margin="10,33,640,0" VerticalAlignment="Top" />
+        <Label Content="Custom" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <ui:Button  Content="Clear" Click="ClearButton_Click"  Margin="265,36,0,0" VerticalAlignment="Top" />
     </Grid>
 </Page>

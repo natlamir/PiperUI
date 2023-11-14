@@ -24,6 +24,7 @@ namespace PiperUI.Views.Pages
             InitializeComponent();
             InitializeData(); // Load your JSON data into voiceData
             PopulateLanguageComboBox();
+            PopulateCustomComboBox();
         }
 
         private void pageLoad(object sender, RoutedEventArgs e)
@@ -70,6 +71,25 @@ namespace PiperUI.Views.Pages
             }
         }
 
+        private void PopulateCustomComboBox()
+        {
+            // Check if the folder exists
+            if (Directory.Exists("custom"))
+            {
+                // Get all files with the ".onnx" extension in the folder
+                string[] onnxFiles = Directory.GetFiles("custom", "*.onnx");
+
+                // Iterate through the files and add their names to the ComboBox
+                foreach (string filePath in onnxFiles)
+                {
+                    // Get the file name without extension
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+
+                    // Add the file name to the ComboBox
+                    customComboBox.Items.Add(fileNameWithoutExtension);
+                }
+            }
+        }
 
         private void PopulateLanguageComboBox()
         {
@@ -128,14 +148,20 @@ namespace PiperUI.Views.Pages
         }
 
         private async void GenerateButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-            
+        {            
             string selectedVoiceName = voiceNameComboBox.SelectedItem as string;
             string selectedQuality = qualityComboBox.SelectedItem as string;
             string selectedLanguage = languageComboBox.SelectedItem as string;
+            string customVoice = customComboBox.SelectedItem as string;
 
-            if (!string.IsNullOrWhiteSpace(txtPrompt.Text) && selectedLanguage != null && selectedVoiceName != null && selectedQuality != null)
+            if(!string.IsNullOrWhiteSpace(txtPrompt.Text) && customVoice != null)
+            {
+                await Task.Run(() =>
+                {
+                    CallPiper("custom", customVoice + ".onnx");
+                });
+            }
+            else if (!string.IsNullOrWhiteSpace(txtPrompt.Text) && selectedLanguage != null && selectedVoiceName != null && selectedQuality != null)
             {
                 string countryCode = GetCountryCode(selectedVoiceName, selectedQuality);
                 string onnxFile = "";
@@ -147,12 +173,12 @@ namespace PiperUI.Views.Pages
 
                 await Task.Run(() =>
                 {
-                    CallPiper(onnxFile);
+                    CallPiper("models", onnxFile);
                 });
             }
             else
             {
-                System.Windows.MessageBox.Show("Make all selections and enter a prompt");
+                System.Windows.MessageBox.Show("Make valid selections and enter a prompt");
             }
         }
 
@@ -174,7 +200,7 @@ namespace PiperUI.Views.Pages
         }
 
 
-        private void CallPiper(string onnxFile)
+        private void CallPiper(string modelFolder, string onnxFile)
         {
             string folderPath = "output"; // Replace with your actual folder path
             int nextFile = GetNextFileNumber(folderPath);
@@ -189,18 +215,17 @@ namespace PiperUI.Views.Pages
                 prompt = txtPrompt.Text;
             });
 
-            string command = "echo '" + prompt.Replace("'", "''") + "' | " + Environment.CurrentDirectory + "\\piper.exe --model models\\" + onnxFile + " --output_file output\\" + nextFile + ".wav";
+            string command = "chcp 65001 | echo '" + prompt.Replace("'", "''") + "' | piper --model " + modelFolder + "\\" + onnxFile + " --output_file output\\" + nextFile + ".wav";
 
             ProcessStartInfo psi = new ProcessStartInfo
             {
-                FileName = "powershell",
-                Arguments = $"-Command \"{command}\"",
+                FileName = "cmd.exe",
+                Arguments = $"/C \"{command}\"",
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,
-                //WindowStyle = ProcessWindowStyle.Hidden,
                 WorkingDirectory = Environment.CurrentDirectory
             };
 
@@ -280,6 +305,16 @@ namespace PiperUI.Views.Pages
         private void qualityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void customComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            customComboBox.SelectedIndex = -1;
         }
     }
 }
