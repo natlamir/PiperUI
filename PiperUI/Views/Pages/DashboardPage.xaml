@@ -33,9 +33,10 @@
 
         <ComboBox Name="qualityComboBox" Height="40" Margin="568,140,82,0" VerticalAlignment="Top" Grid.RowSpan="2" />
 
-        <ui:TextBox Name="txtPrompt" Margin="10,59,82,5" TextWrapping="Wrap" Grid.Row="1" />
+        <ui:TextBox Name="txtPrompt" Margin="10,84,82,85" TextWrapping="Wrap" Grid.Row="1"  AcceptsReturn="True"
+            ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" RenderTransformOrigin="0.5,-0.026" />
 
-        <ui:Button  Content="Generate" Click="GenerateButton_Click" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Top" />
+        <ui:Button  Content="Generate" Click="GenerateButton_Click" Margin="10,99,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.479,3.269" />
         <Label Content="" Name="lblGenerate" Margin="10,39,10,240" Grid.Row="2" />
         <Label Content="Language" HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top"/>
         <Label Content="Voice" HorizontalAlignment="Left" Margin="288,112,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.055,0.663"/>
