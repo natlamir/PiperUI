@@ -16,34 +16,60 @@
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
-
-    <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Width="900" Height="600" RenderTransformOrigin="0.507,0.58">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="155*"/>
-            <RowDefinition Height="136*"/>
-            <RowDefinition Height="309*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <!-- Custom ComboBox -->
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,10,20">
+            <Label Content="Custom" Margin="0,0,0,5"/>
+            <ComboBox x:Name="customComboBox" Height="40" SelectionChanged="customComboBox_SelectionChanged"/>
+        </StackPanel>
 
-        <ComboBox Name="languageComboBox" SelectionChanged="LanguageComboBox_SelectionChanged" Height="40" Margin="10,140,640,0" VerticalAlignment="Top" Grid.RowSpan="2" />
+        <!-- Clear Button -->
+        <ui:Button Grid.Row="0" Grid.Column="1" Content="Clear" Click="ClearButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,20"/>
 
+        <!-- Language ComboBox -->
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,10,20">
+            <Label Content="Language" Margin="0,0,0,5"/>
+            <ComboBox x:Name="languageComboBox" Height="40" SelectionChanged="LanguageComboBox_SelectionChanged"/>
+        </StackPanel>
 
-        <ComboBox Name="voiceNameComboBox" SelectionChanged="VoiceNameComboBox_SelectionChanged"  Height="40" Margin="288,140,362,0" VerticalAlignment="Top" Grid.RowSpan="2" />
+        <!-- Voice ComboBox -->
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,5,20">
+            <Label Content="Voice" Margin="0,0,0,5"/>
+            <ComboBox x:Name="voiceNameComboBox" Height="40" SelectionChanged="VoiceNameComboBox_SelectionChanged"/>
+        </StackPanel>
 
+        <!-- Quality ComboBox -->
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="10,0,0,20">
+            <Label Content="Quality" Margin="0,0,0,5"/>
+            <ComboBox x:Name="qualityComboBox" Height="40"/>
+        </StackPanel>
 
-        <ComboBox Name="qualityComboBox" Height="40" Margin="568,140,82,0" VerticalAlignment="Top" Grid.RowSpan="2" />
+        <!-- Prompt Label -->
+        <Label Grid.Row="2" Grid.Column="0" Content="Prompt" Margin="0,0,0,5"/>
 
-        <ui:TextBox Name="txtPrompt" Margin="10,84,82,85" TextWrapping="Wrap" Grid.Row="1"  AcceptsReturn="True"
-            ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" RenderTransformOrigin="0.5,-0.026" />
+        <!-- Prompt TextBox -->
+        <ui:TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="txtPrompt" 
+                    TextWrapping="Wrap" AcceptsReturn="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                    Margin="0,0,0,20"/>
 
-        <ui:Button  Content="Generate" Click="GenerateButton_Click" Margin="10,99,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.479,3.269" />
-        <Label Content="" Name="lblGenerate" Margin="10,39,10,240" Grid.Row="2" />
-        <Label Content="Language" HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top"/>
-        <Label Content="Voice" HorizontalAlignment="Left" Margin="288,112,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.055,0.663"/>
-        <Label Content="Quality" HorizontalAlignment="Left" Margin="568,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="7.141,0.575"/>
-        <Label Content="Prompt" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="7.141,0.575" Grid.Row="1"/>
-        <ComboBox x:Name="customComboBox" SelectionChanged="customComboBox_SelectionChanged"  Height="40" Margin="10,33,640,0" VerticalAlignment="Top" />
-        <Label Content="Custom" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <ui:Button  Content="Clear" Click="ClearButton_Click"  Margin="265,36,0,0" VerticalAlignment="Top" />
+        <!-- Generate Button and Label -->
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+            <ui:Button Content="Generate" Click="GenerateButton_Click" Margin="0,0,20,0"/>
+            <Label x:Name="lblGenerate" VerticalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Page>
