@@ -21,6 +21,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -57,17 +58,33 @@
             <ComboBox x:Name="qualityComboBox" Height="40"/>
         </StackPanel>
 
+        <!-- Playback Speed Slider -->
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,20">
+            <Label Content="Playback Speed" Margin="0,0,0,5"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="playbackSpeedSlider" Minimum="0.1" Maximum="5" Value="1" 
+                        TickFrequency="0.1" IsSnapToTickEnabled="True"
+                        ValueChanged="PlaybackSpeedSlider_ValueChanged"/>
+                <TextBlock x:Name="playbackSpeedLabel" Grid.Column="1" Margin="10,0,0,0" 
+                           VerticalAlignment="Center" Text="Normal (1x)"/>
+            </Grid>
+        </StackPanel>
+
         <!-- Prompt Label -->
-        <Label Grid.Row="2" Grid.Column="0" Content="Prompt" Margin="0,0,0,5"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="Prompt" Margin="0,0,0,5"/>
 
         <!-- Prompt TextBox -->
-        <ui:TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="txtPrompt" 
+        <ui:TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" x:Name="txtPrompt" 
                     TextWrapping="Wrap" AcceptsReturn="True"
                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
                     Margin="0,0,0,20"/>
 
         <!-- Generate Button and Label -->
-        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+        <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
             <ui:Button Content="Generate" Click="GenerateButton_Click" Margin="0,0,20,0"/>
             <Label x:Name="lblGenerate" VerticalAlignment="Center"/>
         </StackPanel>

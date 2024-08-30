@@ -209,13 +209,15 @@ namespace PiperUI.Views.Pages
                 Directory.CreateDirectory("output");
 
             string prompt = "";
+            double playbackSpeed = 0;
 
             this.Dispatcher.Invoke(() =>
             {
                 prompt = txtPrompt.Text;
+                playbackSpeed = playbackSpeedSlider.Value;
             });
 
-            string command = "chcp 65001 | echo '" + prompt.Replace("'", "''") + "' | piper --model " + modelFolder + "\\" + onnxFile + " --output_file output\\" + nextFile + ".wav";
+            string command = "chcp 65001 | echo '" + prompt.Replace("'", "''") + "' | piper --model " + modelFolder + "\\" + onnxFile + " --length_scale " + playbackSpeed + " --output_file output\\" + nextFile + ".wav";
 
             ProcessStartInfo psi = new ProcessStartInfo
             {
@@ -315,6 +317,16 @@ namespace PiperUI.Views.Pages
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             customComboBox.SelectedIndex = -1;
+        }
+
+        private void PlaybackSpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (playbackSpeedLabel != null)
+            {
+                double speed = Math.Round(playbackSpeedSlider.Value, 1);
+                string speedDescription = speed == 1 ? "Normal" : speed < 1 ? "Fast" : "Slow";
+                playbackSpeedLabel.Text = $"{speedDescription} ({speed:F1}x)";
+            }
         }
     }
 }
