@@ -328,5 +328,40 @@ namespace PiperUI.Views.Pages
                 playbackSpeedLabel.Text = $"{speedDescription} ({speed:F1}x)";
             }
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(Properties.Settings.Default.RememberSelectedPageItems)
+            {
+                customComboBox.SelectedIndex = Properties.Settings.Default.CustomDropDown;
+                languageComboBox.SelectedIndex = Properties.Settings.Default.Language;
+                voiceNameComboBox.SelectedIndex = Properties.Settings.Default.Voice;
+                qualityComboBox.SelectedIndex = Properties.Settings.Default.Quality;
+                playbackSpeedSlider.Value = Properties.Settings.Default.PlaybackSpeed;
+                txtPrompt.Text = Properties.Settings.Default.Prompt;
+            }
+
+            // is there a better way to do detect page closing?            
+            this.Dispatcher.ShutdownStarted += AppClosing;
+        }
+
+        private void AppClosing(object? sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.RememberSelectedPageItems)
+            {
+                Properties.Settings.Default.CustomDropDown = customComboBox.SelectedIndex;
+                Properties.Settings.Default.Language = languageComboBox.SelectedIndex;
+                Properties.Settings.Default.Voice = voiceNameComboBox.SelectedIndex;
+                Properties.Settings.Default.Quality = qualityComboBox.SelectedIndex;
+                Properties.Settings.Default.PlaybackSpeed = playbackSpeedSlider.Value;
+                Properties.Settings.Default.Prompt = txtPrompt.Text;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // why does this not fire?
+        }
     }
 }

@@ -18,6 +18,31 @@ namespace PiperUI.Views.Pages
             DataContext = this;
 
             InitializeComponent();
+
+            bool rememberSelectedPageItems = Properties.Settings.Default.RememberSelectedPageItems;
+            RememberSelectedPageItemsCheckBox.IsChecked = rememberSelectedPageItems;
+        }
+
+        private void RememberSelectedPageItemsCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.RememberSelectedPageItems = true;
+            Properties.Settings.Default.Save();
+        }
+
+        private void RememberSelectedPageItemsCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.RememberSelectedPageItems = false;
+            Properties.Settings.Default.Save();
+        }
+
+        private void ClearSettings()
+        {
+            Properties.Settings.Default.CustomDropDown = 0;
+            Properties.Settings.Default.Language = 0;
+            Properties.Settings.Default.Voice = 0;
+            Properties.Settings.Default.Quality = 0;
+            Properties.Settings.Default.PlaybackSpeed = 0;
+            Properties.Settings.Default.Prompt = string.Empty;
         }
     }
 }
