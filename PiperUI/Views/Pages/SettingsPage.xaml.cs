@@ -32,6 +32,7 @@ namespace PiperUI.Views.Pages
         private void RememberSelectedPageItemsCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.RememberSelectedPageItems = false;
+            ClearSettings();
             Properties.Settings.Default.Save();
         }
 
