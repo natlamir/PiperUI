@@ -38,11 +38,11 @@ namespace PiperUI.Views.Pages
 
         private void ClearSettings()
         {
-            Properties.Settings.Default.CustomDropDown = 0;
-            Properties.Settings.Default.Language = 0;
-            Properties.Settings.Default.Voice = 0;
-            Properties.Settings.Default.Quality = 0;
-            Properties.Settings.Default.PlaybackSpeed = 0;
+            Properties.Settings.Default.CustomDropDown = -1;
+            Properties.Settings.Default.Language = -1;
+            Properties.Settings.Default.Voice = -1;
+            Properties.Settings.Default.Quality = -1;
+            Properties.Settings.Default.PlaybackSpeed = 1;
             Properties.Settings.Default.Prompt = string.Empty;
         }
     }

@@ -55,7 +55,7 @@
         <!-- Quality ComboBox -->
         <StackPanel Grid.Row="1" Grid.Column="2" Margin="10,0,0,20">
             <Label Content="Quality" Margin="0,0,0,5"/>
-            <ComboBox x:Name="qualityComboBox" Height="40"/>
+            <ComboBox x:Name="qualityComboBox" Height="40" SelectionChanged="qualityComboBox_SelectionChanged" />
         </StackPanel>
 
         <!-- Playback Speed Slider -->
@@ -80,7 +80,7 @@
         <!-- Prompt TextBox -->
         <ui:TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" x:Name="txtPrompt" 
                     TextWrapping="Wrap" AcceptsReturn="True"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" LostFocus="txtPrompt_LostFocus"
                     Margin="0,0,0,20"/>
 
         <!-- Generate Button and Label -->

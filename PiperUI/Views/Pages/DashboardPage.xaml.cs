@@ -137,12 +137,16 @@ namespace PiperUI.Views.Pages
 
         private void LanguageComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.Language = languageComboBox.SelectedIndex;
+            Properties.Settings.Default.Save();
             string selectedLanguage = languageComboBox.SelectedItem as string;
             PopulateVoiceNameComboBox(selectedLanguage);
         }
 
         private void VoiceNameComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.Voice = voiceNameComboBox.SelectedIndex;
+            Properties.Settings.Default.Save();
             string selectedVoiceName = voiceNameComboBox.SelectedItem as string;
             PopulateQualityComboBox(selectedVoiceName);
         }
@@ -320,12 +324,14 @@ namespace PiperUI.Views.Pages
 
         private void qualityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            Properties.Settings.Default.Quality = qualityComboBox.SelectedIndex;
+            Properties.Settings.Default.Save();
         }
 
         private void customComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            Properties.Settings.Default.CustomDropDown = customComboBox.SelectedIndex;
+            Properties.Settings.Default.Save();
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -335,6 +341,9 @@ namespace PiperUI.Views.Pages
 
         private void PlaybackSpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            Properties.Settings.Default.PlaybackSpeed = playbackSpeedSlider.Value;
+            Properties.Settings.Default.Save();
+
             if (playbackSpeedLabel != null)
             {
                 double speed = Math.Round(playbackSpeedSlider.Value, 1);
@@ -371,11 +380,26 @@ namespace PiperUI.Views.Pages
                 Properties.Settings.Default.Prompt = txtPrompt.Text;
                 Properties.Settings.Default.Save();
             }
+            else
+            {
+                Properties.Settings.Default.CustomDropDown = -1;
+                Properties.Settings.Default.Language = -1;
+                Properties.Settings.Default.Voice = -1;
+                Properties.Settings.Default.Quality = -1;
+                Properties.Settings.Default.PlaybackSpeed = 1;
+                Properties.Settings.Default.Prompt = string.Empty;
+            }
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             // why does this not fire?
+        }
+
+        private void txtPrompt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.Prompt = txtPrompt.Text;
+            Properties.Settings.Default.Save();
         }
     }
 }
