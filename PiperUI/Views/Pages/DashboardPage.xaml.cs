@@ -217,6 +217,8 @@ namespace PiperUI.Views.Pages
                 playbackSpeed = playbackSpeedSlider.Value;
             });
 
+            prompt = CleanString(prompt);
+
             string command = "chcp 65001 | echo '" + prompt.Replace("'", "''") + "' | piper --model " + modelFolder + "\\" + onnxFile + " --length_scale " + playbackSpeed + " --output_file output\\" + nextFile + ".wav";
 
             ProcessStartInfo psi = new ProcessStartInfo
@@ -244,6 +246,18 @@ namespace PiperUI.Views.Pages
             SoundPlayer player = new SoundPlayer("output\\" + nextFile + ".wav");
             player.Load();
             player.Play();
+        }
+
+        private string CleanString(string input)
+        {
+            return input
+                .Replace("&", "and")
+                .Replace("|", "")
+                .Replace("\"", "")
+                .Replace("<", "")
+                .Replace(">", "")
+                .Replace("\r\n", " ")
+                .Replace("\n", " ");
         }
 
         private string GetCountryCode(string selectedVoiceName, string selectedQuality)
